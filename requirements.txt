@@ -1,0 +1,4 @@
+Django==1.10
+Scrapy==1.1.2
+scrapy-djangoitem==1.1.1
+fake-useragent==0.1.2
