@@ -6,11 +6,11 @@
 # http://doc.scrapy.org/en/latest/topics/items.html
 
 import scrapy
-from scrapy_djangoitem import DjangoItem
-from search_engine.models import Image
+# from scrapy_djangoitem import DjangoItem
+# from search_engine.models import Image
 
 
-class ImageItem(DjangoItem):
+class ImageItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
-    django_model = Image
+    image_url = scrapy.Field()
+    rank = scrapy.Field()

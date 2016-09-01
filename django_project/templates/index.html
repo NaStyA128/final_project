@@ -4,36 +4,21 @@
 {% block content %}
 
     <div class="container">
-        <form class="navbar-form navbar-left search-image" role="search">
+        <form class="navbar-form navbar-left search-image" method="post" action="/" role="search">
             {% csrf_token %}
             {{ form.as_p }}
           <button type="submit" class="btn btn-default">{% trans "Search" %}</button>
         </form><br>
     </div>
 
-    <div class="row">
-            {% for image in images %}
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="img-wrapper"><img src="{{ image.image_url }}" alt=""></div>
-                    <div class="caption">
-                        <a href="{{ image.image_url }}">Source</a><br>
-                        <a href="{{ image.search_url }}">{{ image.search_url }}</a>
-                    </div>
+    <div class="result-urls">
+        {% if results %}
+            {% for result in results %}
+                <div>
+                    <a href="/{{ result.id }}/">{{ result.keywords }}</a>
                 </div>
-            </div>
             {% endfor %}
+        {% endif %}
     </div>
-
-    {% if is_paginated %}
-        <div class="pager">
-            {% if page_obj.has_previous %}
-                <li><a href="?page={{ page_obj.previous_page_number }}&word={% if search_word %}{{ search_word }}{% endif %}">{% trans "Prev" %}</a></li>
-            {% endif %}
-            {% if page_obj.has_next %}
-                <li><a href="?page={{ page_obj.next_page_number }}&word={% if search_word %}{{ search_word }}{% endif %}">{% trans "Next" %}</a></li>
-            {% endif %}
-        </div>
-    {% endif %}
 
 {% endblock content %}

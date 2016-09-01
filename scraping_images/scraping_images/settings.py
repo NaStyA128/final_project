@@ -13,6 +13,17 @@ import os
 import sys
 import django
 
+# Enables scheduling storing requests queue in redis.
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+
+# Ensure all spiders share same duplicates filter through redis.
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+
+# Specify the host and port to use when connecting to Redis (optional).
+# REDIS_HOST = 'localhost'
+# REDIS_PORT = 6379
+
+
 DJANGO_PROJECT_PATH = '/home/user/final_project/django_project'
 DJANGO_SETTINGS_MODULE = 'django_project.settings'
 
@@ -77,7 +88,8 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'scraping_images.pipelines.SaveImageInDBPipeline': 1000,
+    'scraping_images.pipelines.SaveImageInDBPipeline': 1000,
+    'scrapy_redis.pipelines.RedisPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -101,4 +113,4 @@ ITEM_PIPELINES = {
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-QUANTITY_IMAGES = 10
+QUANTITY_IMAGES = 5

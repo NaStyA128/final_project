@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 
-from .views import HomeView
+from .views import HomeView, ResultView
 
 urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^(\d+)/$', ResultView.as_view(), name='result'),
 ]
