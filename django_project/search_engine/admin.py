@@ -9,7 +9,7 @@ class ImageAdmin(admin.ModelAdmin):
 
 
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ['id', 'keywords', 'status', 'quantity_images', ]
+    list_display = ['id', 'keywords', 'google_status', 'yandex_status', 'instagram_status', 'quantity_images', ]
 
 
 admin.site.register(Image, ImageAdmin)

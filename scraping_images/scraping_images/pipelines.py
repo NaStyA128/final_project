@@ -12,9 +12,14 @@ class SaveImageInDBPipeline(object):
 
     def process_item(self, item, spider):
         task = Task.objects.get(keywords=spider.keyword)
+        # task = Task.objects.get(keywords="summer")
         Image.objects.create(
             task=task,
             image_url=item['image_url'],
             rank=item['rank']
         )
         return item
+
+    # def close_spider(self, spider):
+    #     r = redis.StrictRedis(host='localhost', port=6379, db=0)
+    #     r.publish('our-channel', "True")

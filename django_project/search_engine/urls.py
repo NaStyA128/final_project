@@ -19,5 +19,5 @@ from .views import HomeView, ResultView
 
 urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
-    url(r'^(\d+)/$', ResultView.as_view(), name='result'),
+    url(r'^(\w+)/$', ResultView.as_view(), name='result'),
 ]

@@ -4,9 +4,9 @@
 {% block content %}
 
     <div class="container">
-        <form class="navbar-form navbar-left search-image" method="post" action="/" role="search">
-            {% csrf_token %}
-            {{ form.as_p }}
+        <form class="navbar-form navbar-left search-image" method="POST" action="/" role="search">
+          {% csrf_token %}
+          {{ form.as_p }}
           <button type="submit" class="btn btn-default">{% trans "Search" %}</button>
         </form><br>
     </div>
@@ -15,7 +15,7 @@
         {% if results %}
             {% for result in results %}
                 <div>
-                    <a href="/{{ result.id }}/">{{ result.keywords }}</a>
+                    <a href="/{{ result.keywords }}/">{{ result.keywords }}</a>
                 </div>
             {% endfor %}
         {% endif %}

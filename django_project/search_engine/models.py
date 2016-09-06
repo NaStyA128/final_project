@@ -9,7 +9,17 @@ class Task(models.Model):
         ('scheduled', 'scheduled'),
         ('done', 'done'),
     )
-    status = models.CharField(
+    google_status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default='scheduled',
+    )
+    yandex_status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default='scheduled',
+    )
+    instagram_status = models.CharField(
         max_length=10,
         choices=STATUS_CHOICES,
         default='scheduled',
