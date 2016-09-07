@@ -11,6 +11,11 @@ import scrapy
 
 
 class ImageItem(scrapy.Item):
-    # define the fields for your item here like:
+    """It item at the page.
+
+    Args:
+        image_url: a link at the image.
+        rank: an importance.
+    """
     image_url = scrapy.Field()
     rank = scrapy.Field()

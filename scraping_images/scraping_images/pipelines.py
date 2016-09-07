@@ -9,17 +9,23 @@ from search_engine.models import Task, Image
 
 
 class SaveImageInDBPipeline(object):
+    """It process data.
+    """
 
     def process_item(self, item, spider):
+        """It save data in database.
+
+        Args:
+            item: a current item.
+            spider: a current spider.
+
+        Returns:
+            An item.
+        """
         task = Task.objects.get(keywords=spider.keyword)
-        # task = Task.objects.get(keywords="summer")
         Image.objects.create(
             task=task,
             image_url=item['image_url'],
             rank=item['rank']
         )
         return item
-
-    # def close_spider(self, spider):
-    #     r = redis.StrictRedis(host='localhost', port=6379, db=0)
-    #     r.publish('our-channel', "True")

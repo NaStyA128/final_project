@@ -1,5 +1,8 @@
 Django==1.10
 Scrapy==1.1.2
+scrapy-djangoitem==1.1.1
 fake-useragent==0.1.2
 autobahn==0.16.0
-
+Sphinx==1.4.6
+honcho==0.7.1
+asyncio-redis==0.14.2

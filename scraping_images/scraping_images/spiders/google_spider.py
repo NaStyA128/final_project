@@ -7,6 +7,18 @@ from search_engine.models import Task
 
 
 class GoogleSpider(RedisSpider):
+    """Spider for scraping the page in google.com.
+
+    It based at RedisSpider. Comes the keyword and formed a link.
+    It perform request end return response. Later it parse the page.
+    Later it send message at chanel in redis server.
+
+    Attributes:
+        name: a name of the spider.
+        allowed_domains: allowed domains.
+        quantity: image counter.
+    """
+
     name = 'google-spider'
     allowed_domains = ['google.com.ua']
     quantity = 0
@@ -16,7 +28,15 @@ class GoogleSpider(RedisSpider):
         super(GoogleSpider, self).__init__()
 
     def parse(self, response):
-        # inspect_response(response, self)
+        """The parse of the pages.
+
+        It create instance ImageItem and save needed information in
+        this object. If there is a link to the next page - add to
+        URL list for requests and run this request.
+
+        Args:
+            response: response from the request.
+        """
         for td in response.css('.images_table tr td'):
             if self.quantity < settings.QUANTITY_IMAGES:
                 item = ImageItem()
@@ -34,7 +54,11 @@ class GoogleSpider(RedisSpider):
             yield scrapy.Request(url, self.parse)
 
     def make_request_from_data(self, data):
-        # By default, data is an URL.
+        """The formation of the link.
+
+        Args:
+            data: data is an URL.
+        """
         self.keyword = data
         new_url = 'https://www.google.com.ua/search?q=%s&tbm=isch' % data
         if '://' in new_url:
@@ -43,6 +67,8 @@ class GoogleSpider(RedisSpider):
             self.logger.error("Unexpected URL from '%s': %r", self.redis_key, new_url)
 
     def spider_idle(self):
+        """Schedules a request if available, otherwise waits.
+        """
         if self.keyword:
             Task.objects.filter(keywords=self.keyword).update(
                 google_status='done')

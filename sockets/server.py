@@ -12,30 +12,68 @@ now_client = ''
 
 
 class MyServerProtocol(WebSocketServerProtocol):
+    """Interface for stream protocol.
+
+    The user should implement this interface.
+
+    When the user wants to requests a transport, they pass a protocol
+    factory to a utility function (e.g., EventLoop.create_connection()).
+    """
 
     def onConnect(self, request):
-        print("Client connection: {0}".format(request.peer))
+        """Callback fired during WebSocket opening handshake when new WebSocket client
+        connection is about to be established.
+
+        When you want to accept the connection, return the accepted protocol
+        from list of WebSocket (sub)protocols provided by client or `None` to
+        speak no specific one or when the client protocol list was empty.
+
+        You may also return a pair of `(protocol, headers)` to send additional
+        HTTP headers, with `headers` being a dictionary of key-values.
+
+        Args:
+            request: WebSocket connection request information.
+        """
+        # print("Client connection: {0}".format(request.peer))
         self.factory.clients[request.peer] = self
         global now_client
         now_client = request.peer
-        print(self.factory.clients)
 
     def onOpen(self):
-        print("WebSocket connection open.")
+        """WebSocket connection open.
+
+        WebSocket connection established. Now let the user WAMP
+        session factory create a new WAMP session and fire off
+        session open callback.
+        """
+        # print("WebSocket connection open.")
         global now_client
         self.sendMessage(now_client.encode('utf8'))
 
     def onMessage(self, payload, isBinary):
+        """Callback fired when receiving of a new WebSocket message.
+
+        Args:
+            payload: a message.
+            isBinary: True if payload is binary, else the payload is UTF-8 encoded text.
+        """
         global now_client
         now_client = payload.decode('utf8')
-        if isBinary:
-            print("Binary message received: {0} bytes".format(len(payload)))
-        else:
-            print("Text message received: {0}".format(payload.decode('utf8')))
 
     def onClose(self, wasClean, code, reason):
+        """WebSocket connection closed.
+
+        Callback fired when the WebSocket connection has been
+        closed (WebSocket closing handshake has been finished
+        or the connection was closed uncleanly).
+
+        Args:
+            wasClean: True if the WebSocket connection was closed cleanly.
+            code: Close status code as sent by the WebSocket peer.
+            reason: Close reason as sent by the WebSocket peer.
+        """
         self.factory.clients.pop(self.peer)
-        print("WebSocket connection closed: {0}".format(reason))
+        # print("WebSocket connection closed: {0}".format(reason))
 
 
 class MyFactory(WebSocketServerFactory):
@@ -86,7 +124,6 @@ if __name__ == "__main__":
                 message['instagram'] = reply.value
             if message['google'] and message['yandex'] and message['instagram']:
                 global now_client
-                # self.sendMessage(message['google'].encode('utf8'))
                 factory.clients[now_client].sendMessage(
                     message['google'].encode('utf8')
                 )
@@ -96,8 +133,8 @@ if __name__ == "__main__":
                     'instagram': ''
                 }
                 now_client = ''
-            print('Received: ', repr(reply.value), 'on channel',
-                  reply.channel)
+            # print('Received: ', repr(reply.value), 'on channel',
+            #       reply.channel)
 
         # When finished, close the connection.
         connection.close()
