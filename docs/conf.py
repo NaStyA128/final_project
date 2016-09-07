@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # Search engine documentation build configuration file, created by
-# sphinx-quickstart on Wed Sep  7 03:09:45 2016.
+# sphinx-quickstart on Wed Sep  7 11:47:47 2016.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -343,20 +343,13 @@ texinfo_documents = [
 
 import os
 import sys
+import django
 
 
-# def rel(*x):
-#     return os.path.join(os.path.abspath(os.path.dirname(__file__)), *x)
+sys.path.insert(0, os.path.abspath('../django_project'))
+sys.path.insert(0, os.path.abspath('../scraping_images'))
+sys.path.insert(0, os.path.abspath('../sockets'))
+os.environ['DJANGO_SETTINGS_MODULE'] = 'django_project.settings'
+# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "django_project.settings")
 
-# sys.path.insert(0, os.path.abspath('..'))
-# sys.path.insert(0, rel('..'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '.'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "django_project.settings")
-# os.environ['DJANGO_SETTINGS_MODULE'] = 'django_project.settings'
-
-from django.conf import settings
-settings.configure()
-
-from django import setup as django_setup
-django_setup()
+django.setup()

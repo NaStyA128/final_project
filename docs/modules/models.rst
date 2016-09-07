@@ -1,6 +1,4 @@
-
 Models
 ======
-
-..automodule::django_project.search_engine.models
-   :members:
+.. automodule:: search_engine.models
+    :members:
