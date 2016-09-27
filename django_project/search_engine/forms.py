@@ -1,6 +1,5 @@
 import redis
 from django import forms
-from django.http import HttpResponse, HttpResponseRedirect
 from .actions import get_task_keyword, create_task
 
 
@@ -31,8 +30,6 @@ class SearchForm(forms.Form):
         """
         task = get_task_keyword(self.data.get('keyword', ''))
         if task:
-            # logging.info('Redirect at result images2.')
-            # logging.debug('Redirect at result images.')
             return task
         else:
             task = create_task(self.data.get('keyword', ''))

@@ -1,17 +1,15 @@
-import redis
 import logging
 from django.views.generic.list import ListView
 from django.views.generic.edit import FormView
 from django.http import HttpResponseRedirect, HttpResponse
-
-from .models import (
-    Image,
-    Task
-)
+from .models import Image, Task
 from .forms import SearchForm
 from .actions import *
 
-# Create your views here.
+
+FORMAT = u'%(filename)s[LINE:%(lineno)d]# %(levelname)-8s ' \
+         u'[%(asctime)s]  %(message)s'
+logging.basicConfig(format=FORMAT, level=logging.DEBUG, filename=u'logs.log')
 
 
 class HomeView(ListView, FormView):
@@ -42,15 +40,17 @@ class HomeView(ListView, FormView):
         Returns:
              The requests of users.
         """
-        # tasks = get_all_tasks().reverse()[:5]
         tasks = get_all_tasks()
+        logging.info('Get all tasks.')
         return tasks
 
     def form_valid(self, form):
         result_form = form.save()
         if result_form:
+            logging.debug('Redirect at /%s/.' % result_form)
             return HttpResponseRedirect('/%s/' % result_form)
         else:
+            logging.info('Expectation.')
             return HttpResponse('in process...')
 
 
@@ -81,6 +81,7 @@ class ResultView(ListView):
         """
         images = get_images(self.args[0])
         if images:
+            logging.info('Images.')
             return images
 
     def get_context_data(self, **kwargs):

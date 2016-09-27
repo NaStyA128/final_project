@@ -47,33 +47,9 @@ $(document).ready(function(){
         isopen = false;
     }
 
-    // using jQuery
-    function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie != '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = jQuery.trim(cookies[i]);
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-    var csrftoken = getCookie('csrftoken');
-
-    function csrfSafeMethod(method) {
-        // these HTTP methods do not require CSRF protection
-        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-    }
-
     $('form.search-image button').bind('click', function(e){
         e.preventDefault();
         var keyword = $('#id_keyword').val();
-//        console.log(keyword)
         if(isopen){
             socket.send(my_address);
             console.log("Text message send.");
@@ -84,12 +60,7 @@ $(document).ready(function(){
             $.ajax({
                 url: "/",
                 type: "POST",
-                beforeSend: function(xhr, settings) {
-                    if (!csrfSafeMethod(settings.type) && !this.crossDomain){
-                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                    }
-                },
-                data: ({keyword: keyword}),
+                data: $('form.search-image').serialize(),
                 dataType: "html",
                 success: function(data){
                     $('div.result-images').html(data);
@@ -104,11 +75,6 @@ $(document).ready(function(){
         $.ajax({
             url: href,
             type: "GET",
-            beforeSend: function(xhr, settings) {
-                if (!csrfSafeMethod(settings.type) && !this.crossDomain){
-                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                }
-            },
             data: ({}),
             dataType: "html",
             success: function(data){

@@ -1,9 +1,14 @@
-# from django.shortcuts import get_list_or_404
+import logging
+# from django.shortcuts import get_list_or_404, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from .models import (
     Image,
     Task,
 )
+
+FORMAT = u'%(filename)s[LINE:%(lineno)d]# %(levelname)-8s ' \
+         u'[%(asctime)s]  %(message)s'
+logging.basicConfig(format=FORMAT, level=logging.DEBUG, filename=u'logs.log')
 
 
 def get_images(word):
@@ -17,8 +22,8 @@ def get_images(word):
     """
     taskl = get_task_keyword(word)
     if taskl:
-        images = Image.objects.filter(task_id=taskl.id).order_by('rank')
-        return images
+        return Image.objects.filter(task_id=taskl.id).order_by('rank')
+        # return get_list_or_404(Image.objects.order_by('rank'), task_id=taskl.id)
     else:
         return False
 
