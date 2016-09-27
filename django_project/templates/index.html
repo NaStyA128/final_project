@@ -15,10 +15,14 @@
         {% if results %}
             {% for result in results %}
                 <div>
-                    <a href="/{{ result.keywords }}/">{{ result.keywords }}</a>
+                <a href="/{{ result.keywords }}/">{{ result.keywords }}</a>
                 </div>
             {% endfor %}
         {% endif %}
+    </div>
+
+    <div class="result-images">
+
     </div>
 
 {% endblock content %}

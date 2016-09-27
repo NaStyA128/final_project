@@ -48,27 +48,26 @@ header, nav, section, article, aside, footer{
     vertical-align: middle;  /* ..по вертикали */
     line-height: 1.25; /* переопределить высоту строки на обычную */
 }
-
-/*.images-ul:after{
-    content: "";
+.search-image{
+    margin: 0 auto !important;
     display: block;
-    clear: both;
-    visibility: hidden;
-    line-height: 0;
-    height: 0;
-    margin: 0;
-    padding: 0;
+    width: 400px;
+    float: none !important;
+    padding: 10px 0;
 }
-.images-ul li{
+.search-image p{
+    display: block;
+    width: 250px;
+    margin: 0 auto;
+    float: left;
+}
+.search-image button{
     display: block;
     float: left;
-    width: 226px;
-    height: 200px;
-    padding: 10px 10px;
-    margin: 5px 5px;
-    border: 1px solid red;
+}
+.result-urls{
+    margin-top: 20px;
+}
+.result-urls div{
     text-align: center;
 }
-.images-ul li img{
-
-}*/

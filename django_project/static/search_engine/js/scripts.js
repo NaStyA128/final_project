@@ -34,7 +34,7 @@ $(document).ready(function(){
                     data: ({}),
                     dataType: "html",
                     success: function(data){
-                        $('div.result-urls').html(data);
+                        $('div.result-images').html(data);
                     }
                 });
             }
@@ -73,7 +73,7 @@ $(document).ready(function(){
     $('form.search-image button').bind('click', function(e){
         e.preventDefault();
         var keyword = $('#id_keyword').val();
-        console.log(keyword)
+//        console.log(keyword)
         if(isopen){
             socket.send(my_address);
             console.log("Text message send.");
@@ -92,7 +92,7 @@ $(document).ready(function(){
                 data: ({keyword: keyword}),
                 dataType: "html",
                 success: function(data){
-                    $('div.result-urls').html(data);
+                    $('div.result-images').html(data);
                 }
             });
         }
@@ -112,7 +112,7 @@ $(document).ready(function(){
             data: ({}),
             dataType: "html",
             success: function(data){
-                $('div.result-urls').html(data);
+                $('div.result-images').html(data);
             }
         });
     });

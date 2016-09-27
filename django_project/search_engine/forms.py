@@ -10,9 +10,9 @@ class SearchForm(forms.Form):
     Attributes:
         keyword: a keyword for the searching.
     """
-    keyword = forms.CharField(max_length=100)
+    keyword = forms.CharField(label='Tag', max_length=100, required=True)
 
-    def is_valid(self):
+    def save(self):
         """It handles the form.
 
         The user press the button and a request with keyword
@@ -33,7 +33,7 @@ class SearchForm(forms.Form):
         if task:
             # logging.info('Redirect at result images2.')
             # logging.debug('Redirect at result images.')
-            return HttpResponseRedirect('/%d/' % task.id)
+            return task
         else:
             task = create_task(self.data.get('keyword', ''))
             r = redis.StrictRedis(host='localhost', port=6379, db=0)
@@ -44,4 +44,4 @@ class SearchForm(forms.Form):
             r.lpush('instagram-spider:start_urls',
                     self.data.get('keyword', ''))
             # if r.llen('google-spider:start_urls') == 0
-            return HttpResponse('in process..')
+            return False
