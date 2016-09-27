@@ -24,7 +24,7 @@ DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
 # REDIS_PORT = 6379
 
 
-DJANGO_PROJECT_PATH = '/home/user/final_project/django_project'
+DJANGO_PROJECT_PATH = '/home/user/PycharmProjects/final_project/django_project'
 DJANGO_SETTINGS_MODULE = 'django_project.settings'
 
 sys.path.insert(0, DJANGO_PROJECT_PATH)

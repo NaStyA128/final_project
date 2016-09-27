@@ -43,6 +43,7 @@ class YandexSpider(RedisSpider):
                 item = ImageItem()
                 item['image_url'] = 'https:' + div.xpath('.//img/@src').extract()[0]
                 item['rank'] = 1
+                item['site'] = 2
                 self.quantity += 1
                 yield item
             else:

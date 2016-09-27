@@ -42,6 +42,7 @@ class GoogleSpider(RedisSpider):
                 item = ImageItem()
                 item['image_url'] = td.xpath('.//a/img/@src').extract()[0]
                 item['rank'] = 1
+                item['site'] = 1
                 self.quantity += 1
                 yield item
             else:

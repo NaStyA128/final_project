@@ -96,7 +96,7 @@ if __name__ == "__main__":
     @asyncio.coroutine
     def my_function():
         # Create connection
-        print("MY FUNCTION")
+        # print("MY FUNCTION")
         connection = yield from asyncio_redis.Connection.create(
             host='localhost',
             port=6379

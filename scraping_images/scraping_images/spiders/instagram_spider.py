@@ -84,6 +84,7 @@ class InstagramSpider(RedisSpider):
         item = ImageItem()
         item['image_url'] = my_img["display_src"]
         item['rank'] = 1
+        item['site'] = 3
         return item
 
     def make_request_from_data(self, data):

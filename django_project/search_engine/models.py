@@ -53,11 +53,28 @@ class Image(models.Model):
         date: date added to database.
         image_url: a network link.
         rank: an importance.
+        site: url-site for search.
     """
     task = models.ForeignKey('Task', on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
     image_url = models.URLField()
     rank = models.IntegerField()
+    site = models.ForeignKey('Site', on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.image_url
+
+
+class Site(models.Model):
+    """Site-model.
+
+    This model intended for use with a table Site
+    in the database.
+
+    Attributes:
+        site_url: URL of site.
+    """
+    site_url = models.URLField()
+
+    def __str__(self):
+        return self.site_url
