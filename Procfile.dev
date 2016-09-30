@@ -1,4 +1,4 @@
+redis-server
 googleweb: cd scraping_images && scrapy crawl google-spider
 yandexweb: cd scraping_images && scrapy crawl yandex-spider
 instagramweb: cd scraping_images && scrapy crawl instagram-spider
-redis: redis-server

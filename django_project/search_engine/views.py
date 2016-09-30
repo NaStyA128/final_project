@@ -1,6 +1,7 @@
 import logging
 from django.views.generic.list import ListView
 from django.views.generic.edit import FormView
+from django.views.generic.base import TemplateView
 from django.http import HttpResponseRedirect, HttpResponse
 from .models import Image, Task
 from .forms import SearchForm
@@ -51,7 +52,8 @@ class HomeView(ListView, FormView):
             return HttpResponseRedirect('/%s/' % result_form)
         else:
             logging.info('Expectation.')
-            return HttpResponse('in process...')
+            # return HttpResponse('in process...')
+            return HttpResponseRedirect('/loading/')
 
 
 class ResultView(ListView):
@@ -93,3 +95,7 @@ class ResultView(ListView):
         context = super(ResultView, self).get_context_data(**kwargs)
         context['task'] = get_task_keyword(self.args[0])
         return context
+
+
+class LoadingView(TemplateView):
+    template_name = 'loading.html'

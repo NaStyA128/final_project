@@ -13,6 +13,8 @@ class MyServerProtocol(WebSocketServerProtocol):
     factory to a utility function (e.g., EventLoop.create_connection()).
     """
 
+    _sites = ['google', 'yandex', 'instagram']
+
     def onConnect(self, request):
         """Callback fired during WebSocket opening handshake when new WebSocket client
         connection is about to be established.
@@ -47,25 +49,11 @@ class MyServerProtocol(WebSocketServerProtocol):
         """
         payload = literal_eval(payload.decode('utf-8'))
 
-        self.factory.search_engines['google'].setdefault(payload['keyword'],
-                                                         {'address': {self.peer: self},
-                                                          'counter': False})
-        # self.factory.search_engines['yandex'].setdefault(payload['keyword'],
-        #                                                  {'address': {self.peer: self},
-        #                                                   'counter': False})
-        # self.factory.search_engines['instagram'].setdefault(payload['keyword'],
-        #                                                  {'address': {self.peer: self},
-        #                                                   'counter': False})
-
-        self.factory.search_engines['google'][payload['keyword']]['address'].setdefault(
-            self.peer, self)
-        # self.factory.search_engines['yandex'][payload['keyword']]['address'].setdefault(
-        #     self.peer, self)
-        # self.factory.search_engines['instagram'][
-        #     payload['keyword']]['address'].setdefault(
-        #     self.peer, self)
-
-        print(self.factory.search_engines)
+        for site in self._sites:
+            self.factory.search_engines[site].setdefault(payload['keyword'], {
+                'address': {self.peer: self}, 'counter': False})
+            self.factory.search_engines[site][payload['keyword']][
+                'address'].setdefault(self.peer, self)
 
     def onClose(self, wasClean, code, reason):
         """WebSocket connection closed.
@@ -79,26 +67,26 @@ class MyServerProtocol(WebSocketServerProtocol):
             code: Close status code as sent by the WebSocket peer.
             reason: Close reason as sent by the WebSocket peer.
         """
-        pass
-        # for tag, client in self.factory.search_engines.items():
-        #     if self.peer in client:
-        #         del (self.factory.search_engines[tag][self.peer])
-        # print(self.factory.search_engines)
-        #
-        # self.factory.search_engines = {k: v for k, v in self.factory.search_engines.items() if not v}
+        for tags in self.factory.search_engines.values():
+            for clients in tags.values():
+                if self.peer in clients['address']:
+                    del(clients['address'][self.peer])
+                    clients['counter'] = False
 
-        # for tag, clients in self.factory.tags.items():
-        #     for client in clients:
-        #         if self.peer in client:
-        #             clients.pop(self.peer)
+        for site in self._sites:
+            self.factory.search_engines[site] = {k: v for k, v in
+                                                 self.factory.search_engines[
+                                                     site].items() if
+                                                 v['counter']}
         # print("WebSocket connection closed: {0}".format(reason))
 
 
 class MyFactory(WebSocketServerFactory):
-    search_engines = {'google': {},
-                      # 'yandex': {},
-                      # 'instagram': {}
-                      }
+    search_engines = {
+        'google': {},
+        'yandex': {},
+        'instagram': {}
+    }
 
 
 if __name__ == "__main__":
@@ -135,14 +123,13 @@ if __name__ == "__main__":
         # Inside a while loop, wait for incoming events.
         while True:
             reply = yield from subscriber.next_published()
-            # global message
-            key_dict = factory.search_engines[reply.channel][reply.value]
 
+            key_dict = factory.search_engines[reply.channel][reply.value]
             key_dict['counter'] = True
 
-            if factory.search_engines['google'][reply.value]['counter']:
-                # and factory.search_engines['yandex'][reply.value]['counter'] \
-                #     and factory.search_engines['instagram'][reply.value]['counter']:
+            if factory.search_engines['google'][reply.value]['counter'] \
+                and factory.search_engines['yandex'][reply.value]['counter'] \
+                    and factory.search_engines['instagram'][reply.value]['counter']:
                 for client in key_dict['address'].values():
                     client.sendMessage(reply.value.encode('utf8'))
 

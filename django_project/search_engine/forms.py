@@ -36,13 +36,12 @@ class SearchForm(forms.Form):
             else:
                 return False
         else:
-            # print(self.data.get('keyword', ''))
             create_task(self.data.get('keyword', ''))
             r = redis.StrictRedis(host='localhost', port=6379, db=0)
             r.lpush('google-spider:start_urls',
                     self.data.get('keyword', ''))
-            # r.lpush('yandex-spider:start_urls',
-            #         self.data.get('keyword', ''))
-            # r.lpush('instagram-spider:start_urls',
-            #         self.data.get('keyword', ''))
+            r.lpush('yandex-spider:start_urls',
+                    self.data.get('keyword', ''))
+            r.lpush('instagram-spider:start_urls',
+                    self.data.get('keyword', ''))
             return False

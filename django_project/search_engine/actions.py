@@ -52,8 +52,8 @@ def get_task_keyword(keyword):
         return Task.objects.get(
             keywords=keyword,
             google_status='done',
-            # yandex_status='done',
-            # instagram_status='done'
+            yandex_status='done',
+            instagram_status='done'
         )
     except ObjectDoesNotExist:
         return False
@@ -72,8 +72,8 @@ def get_task_id(task_id):
         return Task.objects.get(
             id=task_id,
             google_status='done',
-            # yandex_status='done',
-            # instagram_status='done'
+            yandex_status='done',
+            instagram_status='done'
         )
     except ObjectDoesNotExist:
         return False

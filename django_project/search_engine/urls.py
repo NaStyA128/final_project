@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 
-from .views import HomeView, ResultView
+from .views import HomeView, ResultView, LoadingView
 
 urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^loading/$', LoadingView.as_view(), name='loading'),
     url(r'^(\w+)/$', ResultView.as_view(), name='result'),
 ]

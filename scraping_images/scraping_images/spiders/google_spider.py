@@ -24,7 +24,6 @@ class GoogleSpider(RedisSpider):
     allowed_domains = ['google.com.ua']
 
     def __init__(self):
-        # self.keyword = None
         super(GoogleSpider, self).__init__()
 
     def parse(self, response):
@@ -48,18 +47,18 @@ class GoogleSpider(RedisSpider):
                 quantity += 1
                 yield item
             else:
-                # self.keyword = None
                 Task.objects.filter(keywords=response.meta['keyword']).update(
                     google_status='done')
                 r = redis.StrictRedis(host='localhost', port=6379, db=0)
                 r.publish('google', response.meta['keyword'])
-                # quantity = 0
                 return
 
         next_href = response.css('#nav td.b a.fl')
         if next_href:
             url = response.urljoin(next_href.xpath('@href').extract()[0])
-            yield scrapy.Request(url, self.parse, meta={'keyword': response.meta['keyword'], 'quantity': quantity})
+            yield scrapy.Request(url, self.parse,
+                                 meta={'keyword': response.meta['keyword'],
+                                       'quantity': quantity})
 
     def make_request_from_data(self, data):
         """The formation of the link.
@@ -67,10 +66,8 @@ class GoogleSpider(RedisSpider):
         Args:
             data: data is an URL.
         """
-        # self.keyword = data
         new_url = 'https://www.google.com.ua/search?q=%s&tbm=isch' % data
         if '://' in new_url:
-            # return self.make_requests_from_url(url=new_url)
             return Request(new_url, dont_filter=True, meta={'keyword': data})
         else:
             self.logger.error("Unexpected URL from '%s': %r", self.redis_key, new_url)
