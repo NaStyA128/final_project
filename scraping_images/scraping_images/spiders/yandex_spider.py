@@ -4,6 +4,7 @@ from scraping_images.items import ImageItem
 from scraping_images import settings
 from scrapy_redis.spiders import RedisSpider
 from search_engine.models import Task
+from scrapy.http import Request
 
 
 class YandexSpider(RedisSpider):
@@ -44,6 +45,7 @@ class YandexSpider(RedisSpider):
                 item['image_url'] = 'https:' + div.xpath('.//img/@src').extract()[0]
                 item['rank'] = 1
                 item['site'] = 2
+                item['keyword'] = response.meta['keyword']
                 self.quantity += 1
                 yield item
             else:
@@ -64,17 +66,19 @@ class YandexSpider(RedisSpider):
         self.keyword = data
         new_url = 'https://yandex.ua/images/search?text=%s' % data
         if '://' in new_url:
-            return self.make_requests_from_url(new_url)
+            # return self.make_requests_from_url(new_url)
+            return Request(new_url, dont_filter=True, meta={'keyword': data})
         else:
             self.logger.error("Unexpected URL from '%s': %r", self.redis_key, new_url)
 
     def spider_idle(self):
         """Schedules a request if available, otherwise waits.
         """
+        print('yandex: %s' % self.keyword)
         if self.keyword:
             Task.objects.filter(keywords=self.keyword).update(
                 yandex_status='done')
             r = redis.StrictRedis(host='localhost', port=6379, db=0)
-            r.publish('yandex-channel', self.keyword)
+            r.publish('yandex', self.keyword)
             self.keyword = None
         super(YandexSpider, self).spider_idle()

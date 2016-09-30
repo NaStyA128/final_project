@@ -21,6 +21,7 @@ def get_images(word):
         A list of pictures or False.
     """
     taskl = get_task_keyword(word)
+    print(taskl)
     if taskl:
         return Image.objects.filter(task_id=taskl.id).order_by('rank')
         # return get_list_or_404(Image.objects.order_by('rank'), task_id=taskl.id)
@@ -32,6 +33,10 @@ def get_all_tasks():
     """It gets from database all tasks.
     """
     return Task.objects.all()
+
+
+def get_task(keyword):
+    return Task.objects.filter(keywords=keyword).exists()
 
 
 def get_task_keyword(keyword):
@@ -47,8 +52,8 @@ def get_task_keyword(keyword):
         return Task.objects.get(
             keywords=keyword,
             google_status='done',
-            yandex_status='done',
-            instagram_status='done'
+            # yandex_status='done',
+            # instagram_status='done'
         )
     except ObjectDoesNotExist:
         return False
@@ -67,8 +72,8 @@ def get_task_id(task_id):
         return Task.objects.get(
             id=task_id,
             google_status='done',
-            yandex_status='done',
-            instagram_status='done'
+            # yandex_status='done',
+            # instagram_status='done'
         )
     except ObjectDoesNotExist:
         return False

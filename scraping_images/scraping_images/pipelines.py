@@ -22,7 +22,9 @@ class SaveImageInDBPipeline(object):
         Returns:
             An item.
         """
-        task = Task.objects.get(keywords=spider.keyword)
+        # print(item['keyword'])
+        task = Task.objects.get(keywords=item['keyword'])
+        # task = Task.objects.get(keywords=spider.keyword)
         site = Site.objects.get(id=item['site'])
         Image.objects.create(
             task=task,

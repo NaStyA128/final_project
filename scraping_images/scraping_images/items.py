@@ -20,3 +20,4 @@ class ImageItem(scrapy.Item):
     image_url = scrapy.Field()
     rank = scrapy.Field()
     site = scrapy.Field()
+    keyword = scrapy.Field()

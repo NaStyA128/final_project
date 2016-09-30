@@ -1,14 +1,7 @@
 import asyncio_redis
+from ast import literal_eval
 from autobahn.asyncio.websocket import WebSocketServerProtocol, \
     WebSocketServerFactory
-
-
-message = {
-    'google': '',
-    'yandex': '',
-    'instagram': ''
-}
-now_client = ''
 
 
 class MyServerProtocol(WebSocketServerProtocol):
@@ -34,10 +27,7 @@ class MyServerProtocol(WebSocketServerProtocol):
         Args:
             request: WebSocket connection request information.
         """
-        # print("Client connection: {0}".format(request.peer))
-        self.factory.clients[request.peer] = self
-        global now_client
-        now_client = request.peer
+        pass
 
     def onOpen(self):
         """WebSocket connection open.
@@ -46,9 +36,7 @@ class MyServerProtocol(WebSocketServerProtocol):
         session factory create a new WAMP session and fire off
         session open callback.
         """
-        # print("WebSocket connection open.")
-        global now_client
-        self.sendMessage(now_client.encode('utf8'))
+        pass
 
     def onMessage(self, payload, isBinary):
         """Callback fired when receiving of a new WebSocket message.
@@ -57,8 +45,27 @@ class MyServerProtocol(WebSocketServerProtocol):
             payload: a message.
             isBinary: True if payload is binary, else the payload is UTF-8 encoded text.
         """
-        global now_client
-        now_client = payload.decode('utf8')
+        payload = literal_eval(payload.decode('utf-8'))
+
+        self.factory.search_engines['google'].setdefault(payload['keyword'],
+                                                         {'address': {self.peer: self},
+                                                          'counter': False})
+        # self.factory.search_engines['yandex'].setdefault(payload['keyword'],
+        #                                                  {'address': {self.peer: self},
+        #                                                   'counter': False})
+        # self.factory.search_engines['instagram'].setdefault(payload['keyword'],
+        #                                                  {'address': {self.peer: self},
+        #                                                   'counter': False})
+
+        self.factory.search_engines['google'][payload['keyword']]['address'].setdefault(
+            self.peer, self)
+        # self.factory.search_engines['yandex'][payload['keyword']]['address'].setdefault(
+        #     self.peer, self)
+        # self.factory.search_engines['instagram'][
+        #     payload['keyword']]['address'].setdefault(
+        #     self.peer, self)
+
+        print(self.factory.search_engines)
 
     def onClose(self, wasClean, code, reason):
         """WebSocket connection closed.
@@ -72,12 +79,26 @@ class MyServerProtocol(WebSocketServerProtocol):
             code: Close status code as sent by the WebSocket peer.
             reason: Close reason as sent by the WebSocket peer.
         """
-        self.factory.clients.pop(self.peer)
+        pass
+        # for tag, client in self.factory.search_engines.items():
+        #     if self.peer in client:
+        #         del (self.factory.search_engines[tag][self.peer])
+        # print(self.factory.search_engines)
+        #
+        # self.factory.search_engines = {k: v for k, v in self.factory.search_engines.items() if not v}
+
+        # for tag, clients in self.factory.tags.items():
+        #     for client in clients:
+        #         if self.peer in client:
+        #             clients.pop(self.peer)
         # print("WebSocket connection closed: {0}".format(reason))
 
 
 class MyFactory(WebSocketServerFactory):
-    clients = {}
+    search_engines = {'google': {},
+                      # 'yandex': {},
+                      # 'instagram': {}
+                      }
 
 
 if __name__ == "__main__":
@@ -96,7 +117,6 @@ if __name__ == "__main__":
     @asyncio.coroutine
     def my_function():
         # Create connection
-        # print("MY FUNCTION")
         connection = yield from asyncio_redis.Connection.create(
             host='localhost',
             port=6379
@@ -107,34 +127,24 @@ if __name__ == "__main__":
 
         # Subscribe to channel.
         yield from subscriber.subscribe([
-            'google-channel',
-            'yandex-channel',
-            'instagram-channel'
+            'google',
+            'yandex',
+            'instagram'
         ])
 
         # Inside a while loop, wait for incoming events.
         while True:
             reply = yield from subscriber.next_published()
-            global message
-            if reply.channel == 'google-channel':
-                message['google'] = reply.value
-            if reply.channel == 'yandex-channel':
-                message['yandex'] = reply.value
-            if reply.channel == 'instagram-channel':
-                message['instagram'] = reply.value
-            if message['google'] and message['yandex'] and message['instagram']:
-                global now_client
-                factory.clients[now_client].sendMessage(
-                    message['google'].encode('utf8')
-                )
-                message = {
-                    'google': '',
-                    'yandex': '',
-                    'instagram': ''
-                }
-                now_client = ''
-            # print('Received: ', repr(reply.value), 'on channel',
-            #       reply.channel)
+            # global message
+            key_dict = factory.search_engines[reply.channel][reply.value]
+
+            key_dict['counter'] = True
+
+            if factory.search_engines['google'][reply.value]['counter']:
+                # and factory.search_engines['yandex'][reply.value]['counter'] \
+                #     and factory.search_engines['instagram'][reply.value]['counter']:
+                for client in key_dict['address'].values():
+                    client.sendMessage(reply.value.encode('utf8'))
 
         # When finished, close the connection.
         connection.close()
@@ -148,3 +158,4 @@ if __name__ == "__main__":
     finally:
         server.close()
         loop.close()
+

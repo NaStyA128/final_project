@@ -6,6 +6,7 @@ from scraping_images.items import ImageItem
 from scraping_images import settings
 from scrapy_redis.spiders import RedisSpider
 from search_engine.models import Task
+from scrapy.http import Request
 
 
 class InstagramSpider(RedisSpider):
@@ -49,7 +50,7 @@ class InstagramSpider(RedisSpider):
         for img in data_top:
             if not self.top:
                 if self.quantity < settings.QUANTITY_IMAGES:
-                    item = self.add_item(img)
+                    item = self.add_item(img, response.meta)
                     self.quantity += 1
                     yield item
                 else:
@@ -58,7 +59,7 @@ class InstagramSpider(RedisSpider):
         self.top = True
         for img in data_media:
             if self.quantity < settings.QUANTITY_IMAGES:
-                item = self.add_item(img)
+                item = self.add_item(img, response.meta)
                 self.quantity += 1
                 yield item
             else:
@@ -72,7 +73,7 @@ class InstagramSpider(RedisSpider):
                 json_data["entry_data"]["TagPage"][0]["tag"]["media"]["page_info"]["end_cursor"])
             yield scrapy.Request(url, self.parse)
 
-    def add_item(self, my_img):
+    def add_item(self, my_img, meta):
         """It save needed information in object.
 
         Args:
@@ -85,6 +86,7 @@ class InstagramSpider(RedisSpider):
         item['image_url'] = my_img["display_src"]
         item['rank'] = 1
         item['site'] = 3
+        item['keyword'] = meta['keyword']
         return item
 
     def make_request_from_data(self, data):
@@ -96,17 +98,19 @@ class InstagramSpider(RedisSpider):
         self.keyword = data
         new_url = 'https://www.instagram.com/explore/tags/%s/' % data
         if '://' in new_url:
-            return self.make_requests_from_url(new_url)
+            # return self.make_requests_from_url(new_url)
+            return Request(new_url, dont_filter=True, meta={'keyword': data})
         else:
             self.logger.error("Unexpected URL from '%s': %r", self.redis_key, new_url)
 
     def spider_idle(self):
         """Schedules a request if available, otherwise waits.
         """
+        print('instagram: %s' % self.keyword)
         if self.keyword:
             Task.objects.filter(keywords=self.keyword).update(
                 instagram_status='done')
             r = redis.StrictRedis(host='localhost', port=6379, db=0)
-            r.publish('instagram-channel', self.keyword)
+            r.publish('instagram', self.keyword)
             self.keyword = None
         super(InstagramSpider, self).spider_idle()

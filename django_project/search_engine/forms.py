@@ -1,6 +1,6 @@
 import redis
 from django import forms
-from .actions import get_task_keyword, create_task
+from .actions import get_task_keyword, create_task, get_task
 
 
 class SearchForm(forms.Form):
@@ -28,17 +28,21 @@ class SearchForm(forms.Form):
         Returns:
             A redirecting at page with results.
         """
-        task = get_task_keyword(self.data.get('keyword', ''))
-        if task:
-            return task
+        existing_task = get_task(self.data.get('keyword', ''))
+        if existing_task:
+            task = get_task_keyword(self.data.get('keyword', ''))
+            if task:
+                return task
+            else:
+                return False
         else:
-            task = create_task(self.data.get('keyword', ''))
+            # print(self.data.get('keyword', ''))
+            create_task(self.data.get('keyword', ''))
             r = redis.StrictRedis(host='localhost', port=6379, db=0)
             r.lpush('google-spider:start_urls',
                     self.data.get('keyword', ''))
-            r.lpush('yandex-spider:start_urls',
-                    self.data.get('keyword', ''))
-            r.lpush('instagram-spider:start_urls',
-                    self.data.get('keyword', ''))
-            # if r.llen('google-spider:start_urls') == 0
+            # r.lpush('yandex-spider:start_urls',
+            #         self.data.get('keyword', ''))
+            # r.lpush('instagram-spider:start_urls',
+            #         self.data.get('keyword', ''))
             return False
