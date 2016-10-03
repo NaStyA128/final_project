@@ -47,12 +47,12 @@ class HomeView(ListView, FormView):
 
     def form_valid(self, form):
         result_form = form.save()
+
         if result_form:
             logging.debug('Redirect at /%s/.' % result_form)
             return HttpResponseRedirect('/%s/' % result_form)
         else:
             logging.info('Expectation.')
-            # return HttpResponse('in process...')
             return HttpResponseRedirect('/loading/')
 
 

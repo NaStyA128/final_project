@@ -12,3 +12,195 @@ views.py[LINE:45]# INFO     [2016-09-30 14:31:21,572]  Get all tasks.
 views.py[LINE:86]# INFO     [2016-09-30 14:31:22,740]  Images.
 views.py[LINE:45]# INFO     [2016-09-30 14:31:59,361]  Get all tasks.
 views.py[LINE:45]# INFO     [2016-09-30 14:38:07,537]  Get all tasks.
+views.py[LINE:45]# INFO     [2016-10-03 05:38:23,811]  Get all tasks.
+views.py[LINE:45]# INFO     [2016-10-03 05:53:53,394]  Get all tasks.
+views.py[LINE:45]# INFO     [2016-10-03 06:00:43,032]  Get all tasks.
+views.py[LINE:59]# INFO     [2016-10-03 06:00:50,917]  Expectation.
+exception.py[LINE:124]# ERROR    [2016-10-03 06:00:50,918]  Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/exception.py", line 39, in inner
+    response = get_response(request)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/base.py", line 88, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/edit.py", line 183, in post
+    return self.form_valid(form)
+  File "/home/user/PycharmProjects/final_project/django_project/search_engine/views.py", line 60, in form_valid
+    self.request.session['words_list'] += result_form['keyword']
+TypeError: 'bool' object is not subscriptable
+views.py[LINE:45]# INFO     [2016-10-03 06:15:14,122]  Get all tasks.
+views.py[LINE:45]# INFO     [2016-10-03 06:15:39,464]  Get all tasks.
+views.py[LINE:59]# INFO     [2016-10-03 06:15:41,196]  Expectation.
+exception.py[LINE:124]# ERROR    [2016-10-03 06:15:41,196]  Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/exception.py", line 39, in inner
+    response = get_response(request)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/base.py", line 88, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/edit.py", line 183, in post
+    return self.form_valid(form)
+  File "/home/user/PycharmProjects/final_project/django_project/search_engine/views.py", line 61, in form_valid
+    print(result_form['keyword'])
+TypeError: 'bool' object is not subscriptable
+views.py[LINE:45]# INFO     [2016-10-03 06:18:10,634]  Get all tasks.
+exception.py[LINE:124]# ERROR    [2016-10-03 06:18:12,371]  Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/exception.py", line 39, in inner
+    response = get_response(request)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/base.py", line 88, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/edit.py", line 183, in post
+    return self.form_valid(form)
+  File "/home/user/PycharmProjects/final_project/django_project/search_engine/views.py", line 55, in form_valid
+    self.request.session['words_list'] += result_form['keyword']
+TypeError: 'Task' object is not subscriptable
+views.py[LINE:45]# INFO     [2016-10-03 06:18:16,102]  Get all tasks.
+exception.py[LINE:124]# ERROR    [2016-10-03 06:18:24,660]  Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/exception.py", line 39, in inner
+    response = get_response(request)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/base.py", line 88, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/edit.py", line 183, in post
+    return self.form_valid(form)
+  File "/home/user/PycharmProjects/final_project/django_project/search_engine/views.py", line 55, in form_valid
+    self.request.session['words_list'] += result_form['keyword']
+TypeError: 'Task' object is not subscriptable
+views.py[LINE:45]# INFO     [2016-10-03 06:20:11,326]  Get all tasks.
+views.py[LINE:58]# DEBUG    [2016-10-03 06:20:12,405]  Redirect at /result/.
+views.py[LINE:106]# INFO     [2016-10-03 06:20:12,697]  Images.
+views.py[LINE:45]# INFO     [2016-10-03 06:21:02,682]  Get all tasks.
+exception.py[LINE:124]# ERROR    [2016-10-03 06:21:04,252]  Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/exception.py", line 39, in inner
+    response = get_response(request)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/base.py", line 88, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/edit.py", line 183, in post
+    return self.form_valid(form)
+  File "/home/user/PycharmProjects/final_project/django_project/search_engine/views.py", line 56, in form_valid
+    print(result_form['keywords'])
+TypeError: 'Task' object is not subscriptable
+views.py[LINE:45]# INFO     [2016-10-03 06:21:23,568]  Get all tasks.
+views.py[LINE:58]# DEBUG    [2016-10-03 06:21:24,893]  Redirect at /result/.
+views.py[LINE:106]# INFO     [2016-10-03 06:21:25,109]  Images.
+views.py[LINE:45]# INFO     [2016-10-03 06:21:50,734]  Get all tasks.
+exception.py[LINE:124]# ERROR    [2016-10-03 06:21:51,645]  Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/exception.py", line 39, in inner
+    response = get_response(request)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/base.py", line 88, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/edit.py", line 183, in post
+    return self.form_valid(form)
+  File "/home/user/PycharmProjects/final_project/django_project/search_engine/views.py", line 56, in form_valid
+    print(result_form['keywords'])
+TypeError: 'Task' object is not subscriptable
+views.py[LINE:45]# INFO     [2016-10-03 06:22:16,828]  Get all tasks.
+exception.py[LINE:124]# ERROR    [2016-10-03 06:22:17,621]  Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/exception.py", line 39, in inner
+    response = get_response(request)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/base.py", line 88, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/edit.py", line 183, in post
+    return self.form_valid(form)
+  File "/home/user/PycharmProjects/final_project/django_project/search_engine/views.py", line 56, in form_valid
+    print(result_form.get('keywords', False))
+AttributeError: 'Task' object has no attribute 'get'
+views.py[LINE:45]# INFO     [2016-10-03 06:22:34,496]  Get all tasks.
+views.py[LINE:58]# DEBUG    [2016-10-03 06:22:35,664]  Redirect at /result/.
+views.py[LINE:106]# INFO     [2016-10-03 06:22:35,847]  Images.
+views.py[LINE:45]# INFO     [2016-10-03 06:26:53,283]  Get all tasks.
+views.py[LINE:52]# DEBUG    [2016-10-03 06:26:55,772]  Redirect at /result/.
+views.py[LINE:86]# INFO     [2016-10-03 06:26:55,798]  Images.
+views.py[LINE:45]# INFO     [2016-10-03 06:26:56,962]  Get all tasks.
+views.py[LINE:55]# INFO     [2016-10-03 06:27:03,314]  Expectation.
+views.py[LINE:86]# INFO     [2016-10-03 06:27:09,132]  Images.
+views.py[LINE:45]# INFO     [2016-10-03 06:27:11,580]  Get all tasks.
+views.py[LINE:45]# INFO     [2016-10-03 06:36:16,117]  Get all tasks.
+base.py[LINE:152]# WARNING  [2016-10-03 06:36:16,654]  Not Found: /favicon.ico
+views.py[LINE:45]# INFO     [2016-10-03 07:00:58,251]  Get all tasks.
+views.py[LINE:55]# INFO     [2016-10-03 07:01:13,846]  Expectation.
+views.py[LINE:45]# INFO     [2016-10-03 07:01:22,577]  Get all tasks.
+views.py[LINE:55]# INFO     [2016-10-03 07:01:28,992]  Expectation.
+views.py[LINE:86]# INFO     [2016-10-03 07:01:33,988]  Images.
+views.py[LINE:55]# INFO     [2016-10-03 07:01:35,391]  Expectation.
+views.py[LINE:86]# INFO     [2016-10-03 07:01:38,752]  Images.
+views.py[LINE:45]# INFO     [2016-10-03 07:02:04,258]  Get all tasks.
+views.py[LINE:55]# INFO     [2016-10-03 07:02:21,158]  Expectation.
+views.py[LINE:55]# INFO     [2016-10-03 07:02:23,505]  Expectation.
+views.py[LINE:86]# INFO     [2016-10-03 07:02:24,054]  Images.
+views.py[LINE:52]# DEBUG    [2016-10-03 07:04:45,643]  Redirect at /fork/.
+views.py[LINE:86]# INFO     [2016-10-03 07:04:45,673]  Images.
+views.py[LINE:45]# INFO     [2016-10-03 07:04:47,786]  Get all tasks.
+views.py[LINE:45]# INFO     [2016-10-03 07:09:28,418]  Get all tasks.
+views.py[LINE:86]# INFO     [2016-10-03 07:09:29,532]  Images.
+views.py[LINE:86]# INFO     [2016-10-03 07:09:30,336]  Images.
+views.py[LINE:86]# INFO     [2016-10-03 07:09:31,176]  Images.
+views.py[LINE:45]# INFO     [2016-10-03 07:09:32,211]  Get all tasks.
+views.py[LINE:45]# INFO     [2016-10-03 07:10:20,047]  Get all tasks.
+exception.py[LINE:124]# ERROR    [2016-10-03 07:10:30,523]  Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/exception.py", line 39, in inner
+    response = get_response(request)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/base.py", line 88, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/views/generic/list.py", line 159, in get
+    self.object_list = self.get_queryset()
+  File "/home/user/PycharmProjects/final_project/django_project/search_engine/views.py", line 44, in get_queryset
+    tasks = get_all_tasks()
+  File "/home/user/PycharmProjects/final_project/django_project/search_engine/actions.py", line 35, in get_all_tasks
+    return Task.objects.all()[:-5]
+  File "/home/user/PycharmProjects/final_project/.env/lib/python3.5/site-packages/django/db/models/query.py", line 275, in __getitem__
+    "Negative indexing is not supported."
+AssertionError: Negative indexing is not supported.
+views.py[LINE:45]# INFO     [2016-10-03 07:10:39,371]  Get all tasks.
+views.py[LINE:45]# INFO     [2016-10-03 07:10:46,967]  Get all tasks.
